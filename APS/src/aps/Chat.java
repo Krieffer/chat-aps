@@ -48,7 +48,7 @@ public class Chat extends javax.swing.JFrame {
                     br = new BufferedReader(isr);
 
                     while ((mensagem = br.readLine()) != null) {
-                        mensagemRecebida.setText(mensagemRecebida.getText() + mensagem + "\n");
+                        tar_mensagemRecebida.setText(tar_mensagemRecebida.getText() + mensagem + "\n");
 
                         if (!rodar) {
                             break;
@@ -69,40 +69,41 @@ public class Chat extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        mensagemRecebida = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        tar_mensagemRecebida = new javax.swing.JTextArea();
+        btn_enviar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        mensagemEnviada = new javax.swing.JTextArea();
+        tar_mensagemEnviada = new javax.swing.JTextArea();
         btn_sair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("ChatAPS");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setName("frm_inicial"); // NOI18N
         setResizable(false);
 
-        mensagemRecebida.setEditable(false);
-        mensagemRecebida.setColumns(20);
-        mensagemRecebida.setLineWrap(true);
-        mensagemRecebida.setRows(5);
-        jScrollPane1.setViewportView(mensagemRecebida);
+        tar_mensagemRecebida.setEditable(false);
+        tar_mensagemRecebida.setColumns(20);
+        tar_mensagemRecebida.setLineWrap(true);
+        tar_mensagemRecebida.setRows(5);
+        jScrollPane1.setViewportView(tar_mensagemRecebida);
 
-        jButton1.setText("Enviar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_enviar.setText("Enviar");
+        btn_enviar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_enviarActionPerformed(evt);
             }
         });
 
-        mensagemEnviada.setColumns(20);
-        mensagemEnviada.setLineWrap(true);
-        mensagemEnviada.setRows(5);
-        mensagemEnviada.setAutoscrolls(false);
-        mensagemEnviada.addKeyListener(new java.awt.event.KeyAdapter() {
+        tar_mensagemEnviada.setColumns(20);
+        tar_mensagemEnviada.setLineWrap(true);
+        tar_mensagemEnviada.setRows(5);
+        tar_mensagemEnviada.setAutoscrolls(false);
+        tar_mensagemEnviada.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                mensagemEnviadaKeyPressed(evt);
+                tar_mensagemEnviadaKeyPressed(evt);
             }
         });
-        jScrollPane2.setViewportView(mensagemEnviada);
+        jScrollPane2.setViewportView(tar_mensagemEnviada);
 
         btn_sair.setText("Sair");
         btn_sair.addActionListener(new java.awt.event.ActionListener() {
@@ -123,7 +124,7 @@ public class Chat extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btn_sair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(btn_enviar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -136,7 +137,7 @@ public class Chat extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_sair)))
                 .addContainerGap())
@@ -146,42 +147,42 @@ public class Chat extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enviarActionPerformed
 
         String mensagem = nome + " disse: ";
 
         try {
             PrintStream ps = new PrintStream(s.getOutputStream());
-            mensagem += mensagemEnviada.getText();
+            mensagem += tar_mensagemEnviada.getText();
 
             ps.println(mensagem);
             ps.flush();
 
-            mensagemEnviada.setText("");
+            tar_mensagemEnviada.setText("");
         } catch (IOException e) {
             showMessageDialog(null, "Não conseguiu enviar a mensagem", "", ERROR_MESSAGE);
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_enviarActionPerformed
 
-    private void mensagemEnviadaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_mensagemEnviadaKeyPressed
+    private void tar_mensagemEnviadaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tar_mensagemEnviadaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 
             String mensagem = nome + " disse: ";
 
             try {
                 PrintStream ps = new PrintStream(s.getOutputStream());
-                mensagem += mensagemEnviada.getText();
+                mensagem += tar_mensagemEnviada.getText();
 
                 ps.println(mensagem);
                 ps.flush();
 
-                mensagemEnviada.setText("");
+                tar_mensagemEnviada.setText("");
             } catch (IOException e) {
                 showMessageDialog(null, "Não conseguiu enviar a mensagem", "", ERROR_MESSAGE);
             }
         }
-    }//GEN-LAST:event_mensagemEnviadaKeyPressed
+    }//GEN-LAST:event_tar_mensagemEnviadaKeyPressed
 
     //botao sair
     private void btn_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sairActionPerformed
@@ -196,21 +197,23 @@ public class Chat extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_sairActionPerformed
 
-    public static void main(String args[]) {
+    public static void main(String args[]) {      
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
+           
             @Override
             public void run() {
-                Chat.setVisible(true);
+                Chat.setVisible(true); 
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_enviar;
     private javax.swing.JButton btn_sair;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea mensagemEnviada;
-    private javax.swing.JTextArea mensagemRecebida;
+    private javax.swing.JTextArea tar_mensagemEnviada;
+    private javax.swing.JTextArea tar_mensagemRecebida;
     // End of variables declaration//GEN-END:variables
 }

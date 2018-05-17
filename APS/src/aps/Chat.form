@@ -7,6 +7,7 @@
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
       <Color id="Cursor Padr&#xe3;o"/>
     </Property>
+    <Property name="name" type="java.lang.String" value="frm_inicial" noResource="true"/>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
@@ -36,7 +37,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btn_sair" max="32767" attributes="0"/>
-                          <Component id="jButton1" max="32767" attributes="0"/>
+                          <Component id="btn_enviar" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
@@ -54,7 +55,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane2" min="-2" pref="85" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="jButton1" min="-2" pref="55" max="-2" attributes="0"/>
+                      <Component id="btn_enviar" min="-2" pref="55" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btn_sair" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -72,7 +73,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="mensagemRecebida">
+        <Component class="javax.swing.JTextArea" name="tar_mensagemRecebida">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="columns" type="int" value="20"/>
@@ -82,12 +83,12 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btn_enviar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Enviar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_enviarActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -97,7 +98,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="mensagemEnviada">
+        <Component class="javax.swing.JTextArea" name="tar_mensagemEnviada">
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="lineWrap" type="boolean" value="true"/>
@@ -105,7 +106,7 @@
             <Property name="autoscrolls" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="mensagemEnviadaKeyPressed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tar_mensagemEnviadaKeyPressed"/>
           </Events>
         </Component>
       </SubComponents>
