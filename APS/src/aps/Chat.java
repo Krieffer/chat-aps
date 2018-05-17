@@ -1,4 +1,3 @@
-
 package aps;
 
 import com.sun.glass.events.KeyEvent;
@@ -10,58 +9,63 @@ import java.net.*;
 import static javax.swing.JOptionPane.*;
 
 public class Chat extends javax.swing.JFrame {
-    
+
     private String nome;
     private Socket s;
     private BufferedReader br;
     private InputStreamReader isr;
-    
+    private boolean rodar;
+
     //Construtor
     public Chat(String nome) {
-        
+
         initComponents();
+        
+        rodar = true;
         this.nome = nome;
-        
-        try{
-        
-            s = new Socket("127.0.0.1",5000);
-        }
-        catch(Exception e){
-            
-            showMessageDialog(null, "Não se conectou ao Servidor.","ChatAPS: Erro 001",ERROR_MESSAGE);
+
+        try {
+
+            s = new Socket("127.0.0.1", 5000);
+        } catch (Exception e) {
+
+            showMessageDialog(null, "Não se conectou ao Servidor.", "ChatAPS: Erro 001", ERROR_MESSAGE);
             System.exit(0);
         }
         Thread();
     }
 
-    private void Thread(){
-        
+    private void Thread() {
+
         Thread t = new Thread(new Runnable() {
-            
+
             String mensagem;
-            
+
             @Override
-            public void run(){
-                
-                try{
+            public void run() {
+
+                try {
                     isr = new InputStreamReader(s.getInputStream());
                     br = new BufferedReader(isr);
-                    
-                    while((mensagem = br.readLine()) != null){
+
+                    while ((mensagem = br.readLine()) != null) {
                         mensagemRecebida.setText(mensagemRecebida.getText() + mensagem + "\n");
+                        
+                        if(!rodar){
+                            break;
+                        }
                     }
-                }
-                catch(IOException e){
+                } catch (IOException e) {
                     showMessageDialog(null, "Erro na conexão com o servidor", "ChatAPS: Erro 001", ERROR_MESSAGE);
                 }
             }
-            
+
         });
-        
+
         t.start();
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -71,8 +75,9 @@ public class Chat extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         mensagemEnviada = new javax.swing.JTextArea();
+        jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         mensagemRecebida.setColumns(20);
         mensagemRecebida.setRows(5);
@@ -94,6 +99,13 @@ public class Chat extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(mensagemEnviada);
 
+        jButton2.setText("Sair");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,10 +113,13 @@ public class Chat extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -114,9 +129,12 @@ public class Chat extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(31, 31, 31))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addComponent(jButton2)))
+                .addContainerGap())
         );
 
         pack();
@@ -124,31 +142,59 @@ public class Chat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         String mensagem = nome + " disse: ";
-        
-        try{
+
+        try {
             PrintStream ps = new PrintStream(s.getOutputStream());
             mensagem += mensagemEnviada.getText();
-            
+
             ps.println(mensagem);
             ps.flush();
-            
+
             mensagemEnviada.setText("");
+        } catch (IOException e) {
+            showMessageDialog(null, "Não conseguiu enviar a mensagem", "", ERROR_MESSAGE);
         }
-        catch(IOException e){
-            showMessageDialog(null, "Não conseguiu enviar a mensagem","",ERROR_MESSAGE);
-        }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void mensagemEnviadaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_mensagemEnviadaKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             
+            String mensagem = nome + " disse: ";
+            
+            try {
+                PrintStream ps = new PrintStream(s.getOutputStream());
+                mensagem += mensagemEnviada.getText();
+
+                ps.println(mensagem);
+                ps.flush();
+
+                mensagemEnviada.setText("");
+            } catch (IOException e) {
+                showMessageDialog(null, "Não conseguiu enviar a mensagem", "", ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_mensagemEnviadaKeyPressed
 
-    
+    //botao sair
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        try{
+           
+           s.close();
+           
+           System.exit(0);
+        }catch(Exception e){
+            
+            e.printStackTrace();
+            
+        }
+        
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -159,6 +205,7 @@ public class Chat extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea mensagemEnviada;
