@@ -82,6 +82,7 @@ public class Chat extends javax.swing.JFrame {
 
         mensagemRecebida.setEditable(false);
         mensagemRecebida.setColumns(20);
+        mensagemRecebida.setLineWrap(true);
         mensagemRecebida.setRows(5);
         jScrollPane1.setViewportView(mensagemRecebida);
 
@@ -93,6 +94,7 @@ public class Chat extends javax.swing.JFrame {
         });
 
         mensagemEnviada.setColumns(20);
+        mensagemEnviada.setLineWrap(true);
         mensagemEnviada.setRows(5);
         mensagemEnviada.setAutoscrolls(false);
         mensagemEnviada.addKeyListener(new java.awt.event.KeyAdapter() {
